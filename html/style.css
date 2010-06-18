@@ -1,0 +1,29 @@
+body
+{
+	font-size: large;
+}
+
+.header
+{
+	font-size: xx-large;
+}
+
+.userinfo
+{
+	font-size: large;
+}
+.error.hidden
+{
+	display: none;
+}
+
+.error.show
+{
+	display: block;
+	color: red;
+}
+
+.board
+{
+	display: none;
+}

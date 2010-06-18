@@ -1,0 +1,79 @@
+python border
+border = {'tun': ['ion', 'tyn', 'wes', 'naf'], 'sev': ['arm', 'bla', 'rum', 'ukr', 'mos'], 'ser': ['bud', 'tri', 'bul', 'rum', 'gre', 'alb'], 'vie': ['boh', 'tri', 'bud', 'gal', 'tyr'], 'lon': ['yor', 'eng', 'nth', 'wal'], 'edi': ['cly', 'lyp', 'yor', 'nrg', 'nth'], 'alb': ['adr', 'ion', 'ser', 'tri', 'gre'], 'nwy': ['nth', 'stp', 'ska', 'swe', 'fin'], 'ank': ['bla', 'con', 'arm', 'smy'], 'pru': ['sil', 'war', 'lvn', 'bal', 'ber'], 'mar': ['gol', 'pie', 'bur', 'gas', 'spa'], 'spa': ['gol', 'mar', 'por', 'wes', 'mid', 'gas'], 'bre': ['gas', 'par', 'mid', 'eng', 'pic'], 'arm': ['ank', 'bla', 'smy', 'syr', 'sev'], 'rom': ['nap', 'tyn', 'tus', 'apu'], 'gol': ['pie', 'tyn', 'wes', 'spa', 'mar', 'tus'], 'wal': ['lon', 'yor', 'iri', 'eng', 'lvp'], 'naf': ['tun', 'mid', 'wes'], 'smy': ['aeg', 'ank', 'con', 'eas', 'arm', 'syr'], 'eng': ['bel', 'bre', 'lon', 'nth', 'pic', 'wal', 'mid', 'iri'], 'tyr': ['boh', 'ven', 'vie', 'tri', 'mun', 'pie'], 'mid': ['bre', 'eng', 'gas', 'iri', 'naf', 'por', 'spa', 'wes', 'nat'], 'hol': ['kie', 'ruh', 'bel', 'nth', 'hel'], 'swe': ['bal', 'bar', 'fin', 'nrg', 'nwy', 'bot', 'ska', 'den'], 'ukr': ['war', 'mos', 'sev', 'gal'], 'wes': ['naf', 'tun', 'tyn', 'mid', 'spa', 'gol'], 'iri': ['eng', 'lvp', 'wal', 'nat', 'mid'], 'gre': ['aeg', 'alb', 'ion', 'ser', 'bul'], 'ska': ['den', 'nth', 'nwy', 'swe'], 'kie': ['ber', 'mun', 'ruh', 'bal', 'hel', 'hol'], 'nat': ['cly', 'iri', 'lvp', 'mid', 'nrg'], 'hel': ['hol', 'kie', 'bal', 'den', 'nth'], 'mun': ['boh', 'bur', 'ruh', 'tyr', 'kie', 'ber', 'sil'], 'fin': ['nwy', 'stp', 'bot', 'swe'], 'war': ['lvn', 'pru', 'sil', 'mos', 'gal', 'ukr'], 'sil': ['boh', 'mun', 'gal', 'war', 'ber', 'pru'], 'ruh': ['bur', 'bel', 'hol', 'kie', 'mun'], 'pic': ['bre', 'par', 'eng', 'bel', 'bur'], 'den': ['hel', 'kei', 'nth', 'swe', 'bal', 'ska'], 'rum': ['bla', 'bud', 'gal', 'ser', 'sev', 'bul'], 'mos': ['lvn', 'sev', 'ukr', 'war', 'stp'], 'gas': ['mar', 'par', 'spa', 'mid', 'bur', 'bre'], 'tus': ['gol', 'rom', 'tyn', 'ven', 'pie'], 'nrg': ['cly', 'edi', 'nat', 'nth', 'swe', 'bar'], 'pie': ['tus', 'tyr', 'ven', 'mar', 'gol'], 'syr': ['eas', 'smy', 'arm'], 'gal': ['boh', 'sil', 'ukr', 'vie', 'war', 'rum', 'bud'], 'bul': ['aeg', 'bla', 'gre', 'rum', 'ser', 'con'], 'ven': ['apu', 'tri', 'pie', 'tus', 'adr', 'tyr'], 'adr': ['apu', 'ven', 'alb', 'tri', 'ion'], 'eas': ['ion', 'syr', 'smy', 'aeg'], 'apu': ['nap', 'rom', 'ion', 'adr', 'ven'], 'bud': ['gal', 'vie', 'rum', 'ser', 'tri'], 'tri': ['adr', 'bud', 'tyr', 'ven', 'vie', 'alb', 'ser'], 'bar': ['nrg', 'stp', 'swe'], 'lvp': ['cly', 'wal', 'yor', 'nat', 'iri'], 'bel': ['hol', 'nth', 'pic', 'ruh', 'eng', 'bur'], 'nth': ['edi', 'hel', 'hol', 'lon', 'yor', 'ska', 'den', 'nwy', 'nrg', 'eng', 'bel'], 'tyn': ['nap', 'tus', 'gol', 'wes', 'tun', 'ion', 'rom'], 'bot': ['bal', 'fin', 'swe', 'stp', 'lvn'], 'bur': ['bel', 'gas', 'mar', 'par', 'pic', 'mun', 'ruh'], 'ion': ['adr', 'apu', 'nap', 'tyn', 'gre', 'alb', 'aeg', 'tun', 'eas'], 'stp': ['bar', 'bot', 'fin', 'lvn', 'mos', 'nwy'], 'aeg': ['bla', 'eas', 'ion', 'smy', 'con', 'bul', 'gre'], 'ber': ['mun', 'pru', 'sil', 'bal', 'kie'], 'bal': ['ber', 'den', 'hel', 'kie', 'pru', 'lvn', 'bot', 'swe'], 'lvn': ['bal', 'bot', 'pru', 'stp', 'mos', 'war'], 'con': ['aeg', 'bla', 'bul', 'smy', 'ank']}
+
+php border
+border = array('tun' => array('ion', 'tyn', 'wes', 'naf'), 'sev' => array('arm', 'bla', 'rum', 'ukr', 'mos'), 'ser' => array('bud', 'tri', 'bul', 'rum', 'gre', 'alb'), 'vie' => array('boh', 'tri', 'bud', 'gal', 'tyr'), 'lon' => array('yor', 'eng', 'nth', 'wal'), 'edi' => array('cly', 'lyp', 'yor', 'nrg', 'nth'), 'alb' => array('adr', 'ion', 'ser', 'tri', 'gre'), 'nwy' => array('nth', 'stp', 'ska', 'swe', 'fin'), 'ank' => array('bla', 'con', 'arm', 'smy'), 'pru' => array('sil', 'war', 'lvn', 'bal', 'ber'), 'mar' => array('gol', 'pie', 'bur', 'gas', 'spa'), 'spa' => array('gol', 'mar', 'por', 'wes', 'mid', 'gas'), 'bre' => array('gas', 'par', 'mid', 'eng', 'pic'), 'arm' => array('ank', 'bla', 'smy', 'syr', 'sev'), 'rom' => array('nap', 'tyn', 'tus', 'apu'), 'gol' => array('pie', 'tyn', 'wes', 'spa', 'mar', 'tus'), 'wal' => array('lon', 'yor', 'iri', 'eng', 'lvp'), 'naf' => array('tun', 'mid', 'wes'), 'smy' => array('aeg', 'ank', 'con', 'eas', 'arm', 'syr'), 'eng' => array('bel', 'bre', 'lon', 'nth', 'pic', 'wal', 'mid', 'iri'), 'tyr' => array('boh', 'ven', 'vie', 'tri', 'mun', 'pie'), 'mid' => array('bre', 'eng', 'gas', 'iri', 'naf', 'por', 'spa', 'wes', 'nat'), 'hol' => array('kie', 'ruh', 'bel', 'nth', 'hel'), 'swe' => array('bal', 'bar', 'fin', 'nrg', 'nwy', 'bot', 'ska', 'den'), 'ukr' => array('war', 'mos', 'sev', 'gal'), 'wes' => array('naf', 'tun', 'tyn', 'mid', 'spa', 'gol'), 'iri' => array('eng', 'lvp', 'wal', 'nat', 'mid'), 'gre' => array('aeg', 'alb', 'ion', 'ser', 'bul'), 'ska' => array('den', 'nth', 'nwy', 'swe'), 'kie' => array('ber', 'mun', 'ruh', 'bal', 'hel', 'hol'), 'nat' => array('cly', 'iri', 'lvp', 'mid', 'nrg'), 'hel' => array('hol', 'kie', 'bal', 'den', 'nth'), 'mun' => array('boh', 'bur', 'ruh', 'tyr', 'kie', 'ber', 'sil'), 'fin' => array('nwy', 'stp', 'bot', 'swe'), 'war' => array('lvn', 'pru', 'sil', 'mos', 'gal', 'ukr'), 'sil' => array('boh', 'mun', 'gal', 'war', 'ber', 'pru'), 'ruh' => array('bur', 'bel', 'hol', 'kie', 'mun'), 'pic' => array('bre', 'par', 'eng', 'bel', 'bur'), 'den' => array('hel', 'kei', 'nth', 'swe', 'bal', 'ska'), 'rum' => array('bla', 'bud', 'gal', 'ser', 'sev', 'bul'), 'mos' => array('lvn', 'sev', 'ukr', 'war', 'stp'), 'gas' => array('mar', 'par', 'spa', 'mid', 'bur', 'bre'), 'tus' => array('gol', 'rom', 'tyn', 'ven', 'pie'), 'nrg' => array('cly', 'edi', 'nat', 'nth', 'swe', 'bar'), 'pie' => array('tus', 'tyr', 'ven', 'mar', 'gol'), 'syr' => array('eas', 'smy', 'arm'), 'gal' => array('boh', 'sil', 'ukr', 'vie', 'war', 'rum', 'bud'), 'bul' => array('aeg', 'bla', 'gre', 'rum', 'ser', 'con'), 'ven' => array('apu', 'tri', 'pie', 'tus', 'adr', 'tyr'), 'adr' => array('apu', 'ven', 'alb', 'tri', 'ion'), 'eas' => array('ion', 'syr', 'smy', 'aeg'), 'apu' => array('nap', 'rom', 'ion', 'adr', 'ven'), 'bud' => array('gal', 'vie', 'rum', 'ser', 'tri'), 'tri' => array('adr', 'bud', 'tyr', 'ven', 'vie', 'alb', 'ser'), 'bar' => array('nrg', 'stp', 'swe'), 'lvp' => array('cly', 'wal', 'yor', 'nat', 'iri'), 'bel' => array('hol', 'nth', 'pic', 'ruh', 'eng', 'bur'), 'nth' => array('edi', 'hel', 'hol', 'lon', 'yor', 'ska', 'den', 'nwy', 'nrg', 'eng', 'bel'), 'tyn' => array('nap', 'tus', 'gol', 'wes', 'tun', 'ion', 'rom'), 'bot' => array('bal', 'fin', 'swe', 'stp', 'lvn'), 'bur' => array('bel', 'gas', 'mar', 'par', 'pic', 'mun', 'ruh'), 'ion' => array('adr', 'apu', 'nap', 'tyn', 'gre', 'alb', 'aeg', 'tun', 'eas'), 'stp' => array('bar', 'bot', 'fin', 'lvn', 'mos', 'nwy'), 'aeg' => array('bla', 'eas', 'ion', 'smy', 'con', 'bul', 'gre'), 'ber' => array('mun', 'pru', 'sil', 'bal', 'kie'), 'bal' => array('ber', 'den', 'hel', 'kie', 'pru', 'lvn', 'bot', 'swe'), 'lvn' => array('bal', 'bot', 'pru', 'stp', 'mos', 'war'), 'con' => array('aeg', 'bla', 'bul', 'smy', 'ank'))
+
+java border
+var border = new Array();
+border['tun'] = Array('ion', 'tyn', 'wes', 'naf');
+border['sev'] = Array('arm', 'bla', 'rum', 'ukr', 'mos');
+border['ser'] = Array('bud', 'tri', 'bul', 'rum', 'gre', 'alb');
+border['vie'] = Array('boh', 'tri', 'bud', 'gal', 'tyr');
+border['lon'] = Array('yor', 'eng', 'nth', 'wal');
+border['edi'] = Array('cly', 'lyp', 'yor', 'nrg', 'nth');
+border['alb'] = Array('adr', 'ion', 'ser', 'tri', 'gre');
+border['nwy'] = Array('nth', 'stp', 'ska', 'swe', 'fin');
+border['ank'] = Array('bla', 'con', 'arm', 'smy');
+border['pru'] = Array('sil', 'war', 'lvn', 'bal', 'ber');
+border['mar'] = Array('gol', 'pie', 'bur', 'gas', 'spa');
+border['spa'] = Array('gol', 'mar', 'por', 'wes', 'mid', 'gas');
+border['bre'] = Array('gas', 'par', 'mid', 'eng', 'pic');
+border['arm'] = Array('ank', 'bla', 'smy', 'syr', 'sev');
+border['rom'] = Array('nap', 'tyn', 'tus', 'apu');
+border['gol'] = Array('pie', 'tyn', 'wes', 'spa', 'mar', 'tus');
+border['wal'] = Array('lon', 'yor', 'iri', 'eng', 'lvp');
+border['naf'] = Array('tun', 'mid', 'wes');
+border['smy'] = Array('aeg', 'ank', 'con', 'eas', 'arm', 'syr');
+border['eng'] = Array('bel', 'bre', 'lon', 'nth', 'pic', 'wal', 'mid', 'iri');
+border['tyr'] = Array('boh', 'ven', 'vie', 'tri', 'mun', 'pie');
+border['mid'] = Array('bre', 'eng', 'gas', 'iri', 'naf', 'por', 'spa', 'wes', 'nat');
+border['hol'] = Array('kie', 'ruh', 'bel', 'nth', 'hel');
+border['swe'] = Array('bal', 'bar', 'fin', 'nrg', 'nwy', 'bot', 'ska', 'den');
+border['ukr'] = Array('war', 'mos', 'sev', 'gal');
+border['wes'] = Array('naf', 'tun', 'tyn', 'mid', 'spa', 'gol');
+border['iri'] = Array('eng', 'lvp', 'wal', 'nat', 'mid');
+border['gre'] = Array('aeg', 'alb', 'ion', 'ser', 'bul');
+border['ska'] = Array('den', 'nth', 'nwy', 'swe');
+border['kie'] = Array('ber', 'mun', 'ruh', 'bal', 'hel', 'hol');
+border['nat'] = Array('cly', 'iri', 'lvp', 'mid', 'nrg');
+border['hel'] = Array('hol', 'kie', 'bal', 'den', 'nth');
+border['mun'] = Array('boh', 'bur', 'ruh', 'tyr', 'kie', 'ber', 'sil');
+border['fin'] = Array('nwy', 'stp', 'bot', 'swe');
+border['war'] = Array('lvn', 'pru', 'sil', 'mos', 'gal', 'ukr');
+border['sil'] = Array('boh', 'mun', 'gal', 'war', 'ber', 'pru');
+border['ruh'] = Array('bur', 'bel', 'hol', 'kie', 'mun');
+border['pic'] = Array('bre', 'par', 'eng', 'bel', 'bur');
+border['den'] = Array('hel', 'kei', 'nth', 'swe', 'bal', 'ska');
+border['rum'] = Array('bla', 'bud', 'gal', 'ser', 'sev', 'bul');
+border['mos'] = Array('lvn', 'sev', 'ukr', 'war', 'stp');
+border['gas'] = Array('mar', 'par', 'spa', 'mid', 'bur', 'bre');
+border['tus'] = Array('gol', 'rom', 'tyn', 'ven', 'pie');
+border['nrg'] = Array('cly', 'edi', 'nat', 'nth', 'swe', 'bar');
+border['pie'] = Array('tus', 'tyr', 'ven', 'mar', 'gol');
+border['syr'] = Array('eas', 'smy', 'arm');
+border['gal'] = Array('boh', 'sil', 'ukr', 'vie', 'war', 'rum', 'bud');
+border['bul'] = Array('aeg', 'bla', 'gre', 'rum', 'ser', 'con');
+border['ven'] = Array('apu', 'tri', 'pie', 'tus', 'adr', 'tyr');
+border['adr'] = Array('apu', 'ven', 'alb', 'tri', 'ion');
+border['eas'] = Array('ion', 'syr', 'smy', 'aeg');
+border['apu'] = Array('nap', 'rom', 'ion', 'adr', 'ven');
+border['bud'] = Array('gal', 'vie', 'rum', 'ser', 'tri');
+border['tri'] = Array('adr', 'bud', 'tyr', 'ven', 'vie', 'alb', 'ser');
+border['bar'] = Array('nrg', 'stp', 'swe');
+border['lvp'] = Array('cly', 'wal', 'yor', 'nat', 'iri');
+border['bel'] = Array('hol', 'nth', 'pic', 'ruh', 'eng', 'bur');
+border['nth'] = Array('edi', 'hel', 'hol', 'lon', 'yor', 'ska', 'den', 'nwy', 'nrg', 'eng', 'bel');
+border['tyn'] = Array('nap', 'tus', 'gol', 'wes', 'tun', 'ion', 'rom');
+border['bot'] = Array('bal', 'fin', 'swe', 'stp', 'lvn');
+border['bur'] = Array('bel', 'gas', 'mar', 'par', 'pic', 'mun', 'ruh');
+border['ion'] = Array('adr', 'apu', 'nap', 'tyn', 'gre', 'alb', 'aeg', 'tun', 'eas');
+border['stp'] = Array('bar', 'bot', 'fin', 'lvn', 'mos', 'nwy');
+border['aeg'] = Array('bla', 'eas', 'ion', 'smy', 'con', 'bul', 'gre');
+border['ber'] = Array('mun', 'pru', 'sil', 'bal', 'kie');
+border['bal'] = Array('ber', 'den', 'hel', 'kie', 'pru', 'lvn', 'bot', 'swe');
+border['lvn'] = Array('bal', 'bot', 'pru', 'stp', 'mos', 'war');
+border['con'] = Array('aeg', 'bla', 'bul', 'smy', 'ank');
+
+
+2010-06-05 23:58:27.723372
