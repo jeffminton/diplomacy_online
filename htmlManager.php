@@ -9,7 +9,7 @@ class htmlManager
 	{
 		$this->tpl = new Savant3();
 		$this->tpl->vals = array();
-		$this->tpl->addPath('template', '/var/www/diplomacy/html/');
+		$this->tpl->addPath('template', '/var/www/diplomacy_online/html/');
 	}
 
 	function showPage()//read and display the header.html file

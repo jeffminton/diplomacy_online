@@ -1,6 +1,3 @@
-<div class="<?php echo $this->eprint($this->class);?>">
-	<?php echo $this->eprint($this->error);?>
-</div>
 <div class="login">
 	<form method="post" action="index.php?add=1">
 		Username: <input type="text" name="uid" id="uid"/>

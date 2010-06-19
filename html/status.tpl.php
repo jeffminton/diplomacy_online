@@ -8,11 +8,11 @@
 		<br /><br />
 		Orders:
 		<br />
-		<?php echo $this->eprint($orderArr['orders']); ?>
+		<?php echo str_replace("\r\n", "<br />", $orderArr['orders']); ?>
 		<br /><br />
 		Result:
 		<br />
-		<?php echo $this->eprint($orderArr['result']); ?>
+		<?php echo str_replace("\r\n", "<br />", $orderArr['result']); ?>
 		<br /><br /><br />
 	<?php endforeach; ?>
 </div>

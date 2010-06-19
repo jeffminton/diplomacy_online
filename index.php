@@ -1,73 +1,73 @@
 <?php
 /**
- *index.php
- *
- *This file determimnes all starting information for the page
- *it sets up session variagbles that tell other modules how to
- *process data  and what information to display
- *@author Jeffrey Minton <jeffrey.minton@gmail.com>
- *@version 0.1
- *@package diplomacyonline        
+ * This file determimnes all starting information for the page
+ * it sets up session variagbles that tell other modules how to
+ * process data  and what information to display
+ * 
+ * author: Jeffrey Minton <jeffrey.minton@gmail.com>
+ * version: 1.0        
  */
 session_start();
 require_once "htmlManager.php";
 require_once "db.php";
 
-/**
- *Main class always called when accessing website.
- *
- *self instantiates and runs at end of file  
- *
- *@package diplomacyonline
- *@subpackage classes   
+/**Main class always contains function run()
+ * which is executed every time site is accessed
+ * self instantiates and runs at end of file  
  */
-class main
+class dip
 {
-	/**
-	 *Run code for main class
-	 *@param none
-	 *@return none	 	
-	 */	
-	function run()
+	public function run()
 	{
 		/**
-		 *object of type htmlManager. used to set display params
-		 *and display templates
-		 *@var 	htmlManager	 		 		
+		 * object of type htmlManager. used to set display params
+		 * and display templates		 		
 		 */		
 		$html = new htmlManager();
 		/**
-		 *object of type db. used to carry out all db transactions
-		 *
-		 *@var db		 		 		
+		 * object of type db. used to carry out all db transactions
 		 */		
 		$db = new db();
 		$db->connect();
 		
 		/**
-		 *Array to hold names of great powers
-		 *
-		 *@var gp		 		 		
+		 * Array to hold names of great powers
 		 */		
 		$gp = array("Austria", "England", "France", "Germany", "Italy", "Russia", "Turkey");
 				
 		
-		////////////////////////////////////////////////////////////////////////
-		//  not logged in
-		////////////////////////////////////////////////////////////////////////
+		
+		/**********************************************************************/
+		/**
+		 * What Follows here are the if statements that determine what
+		 * should be output by the website based on the current state or
+		 * what the user has selected
+		 */
+		/**********************************************************************/
+		
+		/**************************************************************/
+		// user not logged in
+		// $_SESSION['uid'] always holds the user id of the user
+		// that is currently logged in
+		/**************************************************************/
 		if(!isset($_SESSION['uid']))
 		{
-			////////////////////////////////////////////////////////////////////////
-			//  Login atempt
-			////////////////////////////////////////////////////////////////////////
+			/**********************************************************/
+			// Login atempt
+			/**********************************************************/
 			if(isset($_GET["log"]))
 			{
+				//call checkUser method of db class, returns true if
+				//users credentials are correct
+				
+				//if true, set session vars and show main menu
 				if($db->checkUser() == true)
 				{
 					$html->setVal("title", "Diplomacy: Menu");
-					$_SESSION["uid"] = $_POST["uid"];
+					$_SESSION["uid"] = mysql_real_escape_string($_POST["uid"]);
 					$html->setVal("page", "menu");
 				}
+				//if false show login page
 				else
 				{
 					$html->setVal("title", "Diplomacy: Login Failed");
@@ -82,12 +82,16 @@ class main
 				$html->setVal("page", "login");
 			}
 		}
-		////////////////////////////////////////////////////////////////////////
-		//    Add user to system
-		////////////////////////////////////////////////////////////////////////		
+		/**************************************************************/
+		// Add user to system
+		// user has selected to register a new account
+		/**************************************************************/
 		elseif(isset($_GET["add"]))
 		{
-			//if the user already exists
+			//call userExists method of db class
+			// returns true if a user with requested uid already exists
+			
+			//if true show registration page and display error
 			if($db->userExists() == true)
 			{
 				//set the page title and other information
@@ -107,18 +111,25 @@ class main
 				$html->setVal("page", "login");
 			}
 		}
-		////////////////////////////////////////////////////////////////////////
-		//  Submit Orders
-		////////////////////////////////////////////////////////////////////////
+		/**************************************************************/
+		// user requested to submit orders for a game
+		/**************************************************************/
 		elseif(isset($_GET["ord"]))
 		{
-			//  submit orders for selected game
+			//game id selected, show order entry page for that game
 			if(isset($_GET['gid']))
 			{
 				$maplist = array();
 				$countries = array();
+				
+				//get current state of the map from the db
 				$map = $db->getMap();
-				//print_r($map);
+				
+				//a little conversion work
+				//using table retrieved from db, create associative arrays
+				//that store player names mapped to countries
+				//and player names mapped to arrays of area info
+				//that contain aid map to 3 char area code and type mapped to unit type
 				for($i = 0; $i < count($map); $i++)
 				{
 					$row = $map[$i];
@@ -131,23 +142,24 @@ class main
 					array_push($maplist[$row['uid']], array("type" => $row['type'], "aid" => $row['aid']));
 				}
 				
-				//print_r($maplist);
-				//print_r($countries);
+				//set al template values
 				$html->setVal("title", "Diplomacy: Submit Orders");
 				$html->setVal("page", "orderEntry");
 				$html->setVal("gid", $_GET['gid']);
 				$html->setVal("maplist", $maplist);
 				$html->setVal("countries", $countries);
+				$html->setVal("loadJava", true);
 			}
-			//  orders have been entered
+			//orders have been entered
 			elseif(isset($_GET['ent']))
 			{
+				//enter orders into db
 				$db->enterOrders();
 				$html->setVal("title", "Diplomacy: Menu");
 				$html->setVal("page", "menu");
 				system("python processOrders.py");
 			}
-			//  list games player is in
+			//list games player is in
 			else
 			{
 				$html->setVal("title", "Diplomacy: Select Game");
@@ -157,20 +169,27 @@ class main
 				$html->setVal("link", "ord");
 			}
 		}
-		////////////////////////////////////////////////////////////////
-		//     Game Status selected
-		////////////////////////////////////////////////////////////////
+		/**************************************************************/
+		// Game Status selected
+		/**************************************************************/
 		elseif(isset($_GET['st']))
 		{
-			//game selected
+			//game selected show map status
 			if(isset($_GET['gid']))
 			{
 				$maplist = array();
 				$countries = array();
+				
+				//get current state of map from db
 				$map = $db->getMap();
+				//get previous set of orders
 				$orders = $db->getPrevOrders();
-				//print_r($map);
 
+				//a little conversion work
+				//using table retrieved from db, create associative arrays
+				//that store player names mapped to countries
+				//and player names mapped to arrays of area info
+				//that contain aid map to 3 char area code and type mapped to unit type
 				for($i = 0; $i < count($map); $i++)
 				{
 					$row = $map[$i];
@@ -183,9 +202,9 @@ class main
 					array_push($maplist[$row['uid']], array("type" => $row['type'], "aid" => $row['aid']));
 				}
 				
-				//print_r($maplist);
-				//print_r($countries);
-				$html->setVal("title", "Diplomacy: Submit Orders");
+				
+				//set template values
+				$html->setVal("title", "Diplomacy: Game Status");
 				$html->setVal("page", "status");
 				$html->setVal("gid", $_GET['gid']);
 				$html->setVal("maplist", $maplist);
@@ -203,11 +222,13 @@ class main
 				$html->setVal("link", "st");
 			}
 		}
-		////////////////////////////////////////////////////////////////////////
-		//  Create a game
-		////////////////////////////////////////////////////////////////////////
+		/**************************************************************/
+		// User has selected to create a game
+		/**************************************************************/
 		elseif(isset($_GET['create']))
 		{
+			//user has selected a country, add the game to the db
+			//and add user to the in_game table
 			if(isset($_GET['co']))
 			{
 				$db->addGame();
@@ -215,6 +236,7 @@ class main
 				$html->setVal("title", "Diplomacy: Menu");
 				$html->setVal("page", "menu");
 			}
+			//ask user to choose a country
 			else
 			{
 				$html->setVal("title", "Diplomacy: Choose Country");
@@ -222,20 +244,20 @@ class main
 				$html->setVal("gp", $gp);
 			}
 		}
-		////////////////////////////////////////////////////////////////////////
-		//  Register new user
-		////////////////////////////////////////////////////////////////////////
+		/**************************************************************/
+		// User has requested to register with the site
+		/**************************************************************/
 		elseif(isset($_GET["reg"]))
 		{
-			//set the page title
+			//set the template data
 			$html->setVal("title", "Diplomacy: Register");
 			$html->setVal("class", "error.hidden");
 			$html->setVal("error", "");
 			$html->setVal("page", "register");
 		}
-		////////////////////////////////////////////////////////////////////////
-		//  join game selected
-		////////////////////////////////////////////////////////////////////////
+		/**************************************************************/
+		// User has selected to join a game
+		/**************************************************************/
 		elseif(isset($_GET['join']))
 		{
 			//country has been selected
@@ -279,18 +301,18 @@ class main
 				$html->setVal("page", "join");
 			}	      
         }
-        ////////////////////////////////////////////////////////////////////////
-		//  logout selected
-		////////////////////////////////////////////////////////////////////////
+        /**************************************************************/
+		// logout selected
+		/**************************************************************/
 		elseif(isset($_GET['unlog']))
 		{
 			session_destroy();
 			$html->setVal("title", "Doplomacy: Login");
 			$html->setVal("page", "login");
 		}
-		////////////////////////////////////////////////////////////////////////
-		//  default
-		////////////////////////////////////////////////////////////////////////
+		/**************************************************************/
+		// default
+		/**************************************************************/
 		else
 		{
 			//set the page title
@@ -298,23 +320,20 @@ class main
 			$html->setVal("page", "menu");
 		}
 		
-		//show the page
-		//print_r ($_SESSION);
-		//$html->showVals();
+		//if uid is set, display it
 		if(isset($_SESSION['uid']))
 		{
 			$html->setVal("uid", $_SESSION['uid']);
 		}
-		else
-		{
-			$html->setVal("uid", "");
-		}
+		
+		//show the page
 		$html->showPage();
 	}
 }
 
-//
-$main = new main();
+//Object if type dip, used to run main code
+$dip = new dip();
 
-$main->run();
+//run main code
+$dip->run();
 ?>

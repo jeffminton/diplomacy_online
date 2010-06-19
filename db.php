@@ -1,33 +1,45 @@
 <?php
-//db.php database class
 
+/**
+ * This file contains the db class, this class is responsible for
+ * conducting all database transactions, return values vary depending
+ * on the purpose of the function
+ */
+
+require "dbinfo.php";
+
+/**
+ * db class, contains methods to perform al database transactions
+ */
 class db
 {
+	/**
+	 * Connect()
+	 * connect to a databse using the credentials from the dbinfo file
+	 */
 	function connect()
 	{
 		global $connection;
-		
-		$dbName = "diplomacy";
-		$host = "localhost";
-		$user = "diplomacy";
-		$pass = "hhhbbthhAG88773dip";
 
-		$connection = mysql_connect($host, $user, $pass)
+		$connection = mysql_connect(HOST, USER, PASS)
 			or die("Cannot connect to $host as $user:" . mysql_error());
    
-		mysql_select_db($dbName)
+		mysql_select_db(DBNAME)
 			or die ("Cannot open $dbName:" . mysql_error());
 
 	}
-
+	
+	/**
+	 * add a user to the database
+	 */
 	function addUser()
 	{
-		$uid = $_POST["uid"];
+		$uid = mysql_real_escape_string($_POST["uid"]);
 		$pwd = $_POST["pwd1"];
-		$email = $_POST["email"];
-		$fname = $_POST["fname"];
-		$minit = $_POST["minit"];
-		$lname = $_POST["lname"];
+		$email = mysql_real_escape_string($_POST["email"]);
+		$fname = mysql_real_escape_string($_POST["fname"]);
+		$minit = mysql_real_escape_string($_POST["minit"]);
+		$lname = mysql_real_escape_string($_POST["lname"]);
 
 		$salt = mt_rand();
 		$salt = (string) $salt;
@@ -45,9 +57,14 @@ class db
 		return $result;
 	}
 
+	/**
+	 * Check to see if a user exists with the requested uid
+	 * 
+	 * Return: true if user found, false if user not found
+	 */
 	function userExists()
 	{
-		$uid = $_POST["uid"];
+		$uid = mysql_real_escape_string($_POST["uid"]);
 
 		$query = "
 			SELECT *
@@ -61,10 +78,14 @@ class db
 		return $exists;
 	}
 
-	//return true if credentials match existing user, otherwise return false
+	/**
+	 * Check if uid and pwd provided by user a valid
+	 * 
+	 * Return: true if valid, false if not
+	 */
 	function checkUser()
 	{
-		$uid = $_POST["uid"];
+		$uid = mysql_real_escape_string($_POST["uid"]);
 		
 		$query = "
 			SELECT *
@@ -91,6 +112,11 @@ class db
 		return $exists;
 	}
 	
+	/**
+	 * Get list of games a player is in
+	 * 
+	 * Return: list of games
+	 */
 	function getPlayersGames()
 	{
 		$uid = $_SESSION["uid"];
@@ -122,9 +148,16 @@ class db
 		return $games;
 	}
 	
+	
+	/**
+	 * Get list of games that have not yet started and are still
+	 * waiting for more players
+	 * 
+	 * Return: list of games
+	 */
 	function getWaitingGames()
 	{
-		$uid = $_SESSION['uid'];
+		$uid = $_SESSION["uid"];
 		
 		$query = "SELECT DISTINCT g.gid, g.year, g.season, g.players
 					FROM games g, in_game i
@@ -142,6 +175,10 @@ class db
 		return $games;
 	}
 	
+	
+	/**
+	 * Add a new game to the database
+	 */
 	function addGame()
     {	
 		$uid = $_SESSION['uid'];
@@ -160,6 +197,11 @@ class db
         $this->addStartUnits($ct, $gid, $uid);
 	}
 	
+	
+	/**
+	 * Add a players starting units to the table that represents
+	 * the current state of the map
+	 */
 	function addStartUnits($ct, $gid, $uid)
 	{
 		$startArr = array();
@@ -181,9 +223,15 @@ class db
 		}
 	}
 	
+	
+	/**
+	 * Get the current state of the map for a given game
+	 * 
+	 * Retrun: the resulting table
+	 */
 	function getMap()
 	{
-		$gid = $_GET['gid'];
+		$gid = mysql_real_escape_string($_GET['gid']);
 		
 		$query = "SELECT i.uid, c.year, c.season, i.country, c.aid, c.type
 					FROM in_game i, games g, curr_map c
@@ -198,9 +246,16 @@ class db
 		return $map;
 	}
 	
+	
+	/**
+	 * Get the orders entered that made causeed the map to be in its
+	 * current state
+	 * 
+	 * Return: associative array that maps players to orders
+	 */
 	function getPrevOrders()
 	{
-		$gid = $_GET['gid'];
+		$gid = mysql_real_escape_string($_GET['gid']);
 		
 		$query = "SELECT *
 					FROM games
@@ -234,6 +289,11 @@ class db
 		return $orders;
 	}
 	
+	
+	/**
+	 * Add a palyer to a game that is waiting to start and add the 
+	 * players starting units
+	 */
 	function addPlayer()
 	{
 		$uid = $_SESSION['uid'];
@@ -277,6 +337,10 @@ class db
 		}
 	}
 	
+	
+	/**
+	 * enter players orders into order table
+	 */
 	function enterOrders()
 	{
 		$uid = $_SESSION['uid'];
@@ -290,7 +354,7 @@ class db
 		$year = mysql_result($result, 0, "year");
 		$season = mysql_result($result, 0, "season");
 		
-		$orders = $_POST['orders'];
+		$orders = mysql_real_escape_string($_POST['orders']);
 		
 		$query = "INSERT INTO orders(gid, uid, orders, year, season)
 					VALUES($gid, '$uid', '$orders', $year, '$season');";
@@ -298,10 +362,16 @@ class db
 		$result = mysql_query($query) or die("db access error" . mysql_error());
 	}
 	
+	
+	/**
+	 * get a list of countries currently taken by players in a game
+	 * 
+	 * Return: associative array that maps player id's to countries
+	 */
 	function getCountries()
 	{
 		
-		$gid = $_GET['gid'];
+		$gid = mysql_real_escape_string($_GET['gid']);
 		
 		$query = "SELECT DISTINCT country
 					FROM in_game

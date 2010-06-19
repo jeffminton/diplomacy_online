@@ -5,9 +5,9 @@
 	<head>
 		<title><?php echo $this->eprint($this->vals["title"]);?></title>
 		<link rel="stylesheet" type="text/css" href="html/style.css"/>
-		<!--
-		<script type="text/javascript" src="mapper/cvi_map_lib.js"></script>
-		-->
+		
+		<!-- insert javascript for game map only if needed 
+		to reduce code sent over pipe-->
 		<?php if(isset($this->vals["loadJava"])): ?>
 			<script type="text/javascript">
 				<?php echo $this->eprint($this->vals['maplist']); ?>
@@ -19,19 +19,22 @@
 			<script type="text/javascript" src="map/paths.js"></script>
 			<script type="text/javascript" src="script.js"></script>
 		<?php endif; ?>
-		<?php if(isset($this->vals["script"])): ?>
-			<?php for($i = 0; $i < count($this->vals["script"]); $i++): ?>
-				<script type="text/javascript" src="
-					<?php echo $this->eprint($this->vals['script'][$i])?>
-				"></script> 
-			<?php endfor; ?>
-		<? endif; ?>
+		
 	</head>
 	<body>
 		<div class='header'>
 			<?php include $this->template('header.tpl.php') ?>
 		</div>
 		<div class='content'>
+		
+			<!--display error if needed-->
+			<?php if(isset($this->vals['error'])): ?>
+				<div class="error">
+					<?php echo $this->eprint($this->error);?>
+				</div>
+			<?php endif; ?>
+			
+			<!--display desired conetnt page-->
 			<?php include $this->template($this->vals["page"]) ?>
 		</div>
 		<div class='footer'>
