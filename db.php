@@ -4,6 +4,9 @@
  * This file contains the db class, this class is responsible for
  * conducting all database transactions, return values vary depending
  * on the purpose of the function
+ * 
+ * author: Jeffrey Minton <jeffrey.minton@gmail.com>
+ * version: 1.0
  */
 
 require "dbinfo.php";

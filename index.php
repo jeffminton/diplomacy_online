@@ -324,6 +324,7 @@ class dip
 		if(isset($_SESSION['uid']))
 		{
 			$html->setVal("uid", $_SESSION['uid']);
+			setcookie("uid", $_SESSION['uid'], time()+(60 * 60));
 		}
 		
 		//show the page

@@ -23,7 +23,7 @@
 import xml.parsers.expat
 import re
 
-svgDict = {}
+svgDict = []
 inMap = False
 key = ""
 subMap = False
@@ -43,36 +43,12 @@ def main():
 	
 	# 3 handler functions
 	def start_element(name, attrs):
-		#print name
-		global svgDict
-		global inProv
-		global aid
-		#global inMap
-		#print 'Start element:', name, attrs
-		
-		#if(inMap == True):
-			#svgDict[attrs["id"]] = attrs["d"]
-			
-		#if(attrs.has_key("id")):
-			#if(attrs["id"] == "MouseLayer"):
-				#inMap = True
-		if(inProv == True and name == "UNIT"):
-			svgDict[aid] = attrs
-		elif(name == "PROVINCE"):
-			aid = attrs['name']
-			inProv = True
-		
+		if(name == "path" and attrs.has_key('id') and len(attrs['id']) == 3):
+			#print attrs
+			svgDict.append(attrs['id'])
 			
 	def end_element(name):
-		#global svgDict
-		#print "\t" + name
-		global inMap
-		global inProv
-		global aid
-		#print '\tEnd element:', name
-		
-		if(name == "PROVINCE"):
-			inProv = False
+		0
 	
 	p = xml.parsers.expat.ParserCreate()
 	
@@ -83,13 +59,14 @@ def main():
 	
 	print svgDict
 	
-	countries = "var unitCoords = Array();\n"
-	for aid in svgDict:
-		countries += "unitCoords['" + aid + "'] = [" + svgDict[aid]['x'] + ", " + svgDict[aid]['y'] + "];\n"
+	countries = "var countries = ["
+	for i in range(len(svgDict) - 1):
+		countries += "'" + svgDict[i] + "', "
+	countries += "'" + svgDict[len(svgDict) - 1] + "'];"
 		
 	print countries
 	
-	f = open("coords.dat", "w+")
+	f = open("countrySym.dat", "w+")
 	f.write(countries)
 	return 0
 
