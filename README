@@ -1,0 +1,17 @@
+File Explainations:
+
+index.php: main file, is run when site is accessed, determines what other pages to show
+
+db.php: contains functions to perform db transations
+
+htmlManager.php: contains functions to setup templates
+
+processOrders.py: processes orders input by players
+
+script.js: contains js code to display game map
+
+map/raphael.js: the raphaeljs library http://raphaeljs.com/
+
+html/: the html templates
+
+map/: the map files
