@@ -1,7 +1,11 @@
+#!/usr/bin/python
+
 import MySQLdb
 from datetime import datetime
 import re
 import copy
+import sys
+import traceback
 
 ##@package processOrders
 #Checks if all orders for a game are submitted or order deadline is up
@@ -11,11 +15,6 @@ import copy
 ##Sets up sql connection and other parameters
 #contains all other functions
 def checkOrders():
-	conn = MySQLdb.connect(host="localhost", user="diplomacy", 
-		passwd="hhhbbthhAG88773dip", db="diplomacy")
-	cursor = conn.cursor(MySQLdb.cursors.DictCursor)
-	f = open("accessTime.dat", "a+")
-	f.write(str(datetime.now()) + "\n")
 	##Checks to see which if any games' deadlines are up
 	def deadlineUp():
 		query ="SELECT * \
@@ -48,10 +47,14 @@ def checkOrders():
 			orders = cursor.fetchall()
 			if(players == orders):
 				execute(gid)
+			else:
+				#sys.stdout.write(str("orders not in"))
+				return "orders not in"
 	
 	##execute orders for game
 	#@param[gid] the game whos orders to execute
 	def execute(gid):
+		#global out
 		orderRE = re.compile("\W*")
 		#get the current orders for game gid
 		query = "SELECT o.uid, o.orders \
@@ -59,7 +62,7 @@ def checkOrders():
 			WHERE g.gid=" + str(gid) + " and g.gid=o.gid and g.year=o.year and g.season=o.season;"
 		cursor.execute(query)
 		orderTab = cursor.fetchall()
-		#print orderTab
+		#sys.stdout.write(str( orderTab))
 		
 		'''get the current state of the map for game gid'''
 		query = "SELECT c.owner, c.type, c.aid \
@@ -69,7 +72,10 @@ def checkOrders():
 		mapTab = cursor.fetchall()
 		
 		uidOrders = {}
-		print orderTab
+		
+		#out += str(orderTab)
+		#sys.stdout.write(str(orderTab))
+		
 		for arr in orderTab:
 			uid = arr['uid']
 			orders = arr['orders']
@@ -160,7 +166,7 @@ def checkOrders():
 					else:
 						orders[uid][i]['result'] = False
 						orders[uid][i]['note'] = "Player does not own that country"	
-		#print orders
+		#sys.stdout.write( str(orders))
 		update(orders, currMap, gid)
 	
 	##Update orders with results and fill in current map table
@@ -168,6 +174,7 @@ def checkOrders():
 	#@param[currMap] the current map
 	#@param[gid] the gid of the game
 	def update(orders, currMap, gid):
+		#global out
 		query = "SELECT * \
 			FROM games \
 			WHERE gid=" + str(gid)
@@ -206,7 +213,9 @@ def checkOrders():
 		
 		newMap = copy.deepcopy(currMap)
 		
-		print currMap
+		
+		#out += currMap
+		#sys.stdout.write(str( currMap))
 		'''move all armies that had a successful order'''
 		for uid in currMap:
 			for aid in currMap[uid]:
@@ -218,7 +227,8 @@ def checkOrders():
 						for uidCheck in currMap:
 							if(uidCheck != uid and currMap[uidCheck].has_key(order['action'])):
 								del newMap[uidCheck][order['action']]
-		print newMap					
+		#out += newMap
+		#sys.stdout.write(str( newMap))					
 		for uid in newMap:
 			for aid in newMap[uid]:
 				if(newMap[uid][aid] != None):
@@ -230,10 +240,20 @@ def checkOrders():
 					query = "INSERT INTO curr_map(gid, owner, year, season, aid) \
 						VALUES(" + str(gid) + ", '" + uid + "', " + str(year) + ", \
 						'" + season + "', '" + aid + "')"
-				print query
+				#out += query
+				#sys.stdout.write(str( query))
 				cursor.execute(query)
+				
+	conn = MySQLdb.connect(host="localhost", user="diplomacy", 
+		passwd="1B80A65167C5AD50A288593B04F4EEBF37", db="diplomacy")
+	cursor = conn.cursor(MySQLdb.cursors.DictCursor)
+	f = open("accessTime.dat", "a+")
+	f.write("Second: " + str(datetime.now()) + "\n")
+	#out = ""
+	
 	deadlineUp()
 	orderIn()
+	#return out
 
 
 border = {'tun': ['ion', 'tyn', 'wes', 'naf'], 
@@ -304,5 +324,21 @@ border = {'tun': ['ion', 'tyn', 'wes', 'naf'],
 'ber': ['mun', 'pru', 'sil', 'bal', 'kie'], 
 'bal': ['ber', 'den', 'hel', 'kie', 'pru', 'lvn', 'bot', 'swe'], 
 'lvn': ['bal', 'bot', 'pru', 'stp', 'mos', 'war'], 
-'con': ['aeg', 'bla', 'bul', 'smy', 'ank']}
-checkOrders()
+'con': ['aeg', 'bla', 'bul', 'smy', 'ank'],
+'boh': ['vie', 'tyr', 'mun', 'sil', 'gal'],
+'cly': ['lvp', 'nat', 'edi', 'nrg'],
+'yor': ['nth', 'lon', 'wal', 'lvp', 'edi'],
+'par': ['bur', 'gas', 'bre', 'pic'],
+'nap': ['apu', 'ion', 'tyn', 'rom'],
+'por': ['spa', 'mid'],
+'bla': ['sev', 'arm', 'ank', 'con', 'aeg', 'bul', 'rum']}
+
+f = open("accessTime.dat", "a+")
+f.write("First: " + str(datetime.now()) + "\n")
+try:
+	checkOrders()
+except:
+	print "Trigger Exception, traceback info forward to log file."
+	traceback.print_exc(file=open("errlog.txt","w"))
+	sys.exit(20)
+

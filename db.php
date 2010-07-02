@@ -120,26 +120,31 @@ class db
 	 * 
 	 * Return: list of games
 	 */
-	function getPlayersGames()
+	function getPlayersGames($page)
 	{
 		$uid = $_SESSION["uid"];
 		$games = array();
 		
-		$query = "
-			SELECT DISTINCT g.gid, g.year, g.season, g.players, g.running
+		
+		$query = ($page == "ord") ? 
+			"SELECT DISTINCT g.gid, g.year, g.season, g.players, g.running
 			FROM games g, in_game i
 			WHERE g.gid = i.gid
-			AND i.uid = 'test6'
+			AND i.uid = '$uid'
 			AND i.uid <>
 			ALL (
-
 				SELECT DISTINCT o.uid
 				FROM games g1, orders o
 				WHERE g1.gid = g.gid
 				AND g.gid = o.gid
 				AND g.year = o.year
 				AND g.season = o.season
-				)";
+				);" 
+			:
+			"SELECT DISTINCT g.gid, g.year, g.season, g.players, g.running
+			FROM games g, in_game i
+			WHERE g.gid = i.gid
+			AND i.uid = '$uid';";
 			
 		$result = mysql_query($query) or die("db access error" . mysql_error());
 		
@@ -220,7 +225,7 @@ class db
 		foreach($citys as $city => $type)
 		{
 			$query = "INSERT INTO curr_map (gid, aid, owner, type, year, season)
-				VALUES($gid, '$city', '$uid', '$type', 1901, 'f');";
+				VALUES($gid, '$city', '$uid', '$type', 1901, 's');";
 			
 			$result = mysql_query($query) or die("db access error" . mysql_error());
 		}
@@ -234,7 +239,10 @@ class db
 	 */
 	function getMap()
 	{
-		$gid = mysql_real_escape_string($_GET['gid']);
+		if(isset($_POST['gid']))
+			$gid = mysql_real_escape_string($_POST['gid']);
+		else
+			$gid = mysql_real_escape_string($_GET['gid']);
 		
 		$query = "SELECT i.uid, c.year, c.season, i.country, c.aid, c.type
 					FROM in_game i, games g, curr_map c
@@ -344,7 +352,7 @@ class db
 	/**
 	 * enter players orders into order table
 	 */
-	function enterOrders()
+	function enterOrders($orders)
 	{
 		$uid = $_SESSION['uid'];
 		$gid = $_POST['gid'];
@@ -357,7 +365,7 @@ class db
 		$year = mysql_result($result, 0, "year");
 		$season = mysql_result($result, 0, "season");
 		
-		$orders = mysql_real_escape_string($_POST['orders']);
+		//$orders = mysql_real_escape_string($_POST['orders']);
 		
 		$query = "INSERT INTO orders(gid, uid, orders, year, season)
 					VALUES($gid, '$uid', '$orders', $year, '$season');";

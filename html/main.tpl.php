@@ -15,6 +15,7 @@
 			<script type="text/javascript">
 				<?php echo $this->eprint($this->vals['countries']); ?>
 			</script>
+			<!--<script type="text/javascript" src="webtoolkit.contextmenu.js"></script>-->
 			<script type="text/javascript" src="map/raphael.js" ></script>
 			<script type="text/javascript" src="map/paths.js"></script>
 			<script type="text/javascript" src="script.js"></script>
@@ -30,7 +31,7 @@
 			<!--display error if needed-->
 			<?php if(isset($this->vals['error'])): ?>
 				<div class="error">
-					<?php echo $this->eprint($this->error);?>
+					<?php echo $this->eprint($this->vals['error']);?>
 				</div>
 			<?php endif; ?>
 			

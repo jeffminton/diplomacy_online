@@ -1,0 +1,44 @@
+[30-Jun-2010 18:57:28] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/diplomacy_online/index.php:166) in /var/www/diplomacy_online/index.php on line 337
+[30-Jun-2010 18:59:03] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[30-Jun-2010 19:01:35] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[30-Jun-2010 19:01:37] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[30-Jun-2010 19:07:43] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[30-Jun-2010 19:09:41] PHP Notice:  Undefined index: gid in /var/www/diplomacy_online/db.php on line 242
+[30-Jun-2010 19:13:17] PHP Notice:  Undefined offset: 5 in /var/www/diplomacy_online/index.php on line 720
+[30-Jun-2010 19:13:17] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/diplomacy_online/index.php:166) in /var/www/diplomacy_online/index.php on line 334
+[30-Jun-2010 19:13:46] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[30-Jun-2010 19:51:33] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[30-Jun-2010 21:49:45] PHP Notice:  Undefined offset: 7 in /var/www/diplomacy_online/index.php on line 720
+[30-Jun-2010 21:49:45] PHP Notice:  Undefined index: kei in /var/www/diplomacy_online/index.php on line 700
+[30-Jun-2010 21:49:45] PHP Notice:  Undefined offset: 3 in /var/www/diplomacy_online/index.php on line 720
+[30-Jun-2010 21:49:45] PHP Notice:  Undefined offset: 5 in /var/www/diplomacy_online/index.php on line 720
+[30-Jun-2010 21:50:03] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[30-Jun-2010 21:57:39] PHP Notice:  Undefined index: kei in /var/www/diplomacy_online/index.php on line 702
+[30-Jun-2010 21:58:38] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[30-Jun-2010 22:00:54] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[30-Jun-2010 22:02:21] PHP Notice:  Undefined offset: 2 in /var/www/diplomacy_online/index.php on line 722
+[30-Jun-2010 22:02:21] PHP Notice:  Undefined offset: 6 in /var/www/diplomacy_online/index.php on line 722
+[30-Jun-2010 22:02:21] PHP Notice:  Undefined offset: 5 in /var/www/diplomacy_online/index.php on line 722
+[30-Jun-2010 22:02:21] PHP Notice:  Undefined offset: 3 in /var/www/diplomacy_online/index.php on line 722
+[30-Jun-2010 22:02:21] PHP Notice:  Undefined offset: 6 in /var/www/diplomacy_online/index.php on line 722
+[30-Jun-2010 22:10:58] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[30-Jun-2010 22:13:48] PHP Notice:  Undefined index: lyp in /var/www/diplomacy_online/index.php on line 713
+[30-Jun-2010 22:15:22] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[30-Jun-2010 22:21:41] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[30-Jun-2010 22:27:49] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[30-Jun-2010 22:31:57] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[30-Jun-2010 22:33:06] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[30-Jun-2010 22:34:52] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[30-Jun-2010 22:36:36] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[30-Jun-2010 22:37:09] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[30-Jun-2010 22:38:17] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[30-Jun-2010 22:38:55] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[30-Jun-2010 23:15:24] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/diplomacy_online/index.php:684) in /var/www/diplomacy_online/index.php on line 334
+[30-Jun-2010 23:17:38] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/diplomacy_online/index.php:675) in /var/www/diplomacy_online/index.php on line 334
+[30-Jun-2010 23:20:18] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/diplomacy_online/index.php:675) in /var/www/diplomacy_online/index.php on line 334
+[30-Jun-2010 23:23:18] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[01-Jul-2010 15:20:26] PHP Notice:  Undefined property: Savant3::$error in /var/www/diplomacy_online/html/main.tpl.php on line 34
+[01-Jul-2010 15:21:09] PHP Warning:  mysql_result() [<a href='function.mysql-result'>function.mysql-result</a>]: Unable to jump to row 0 on MySQL result index 9 in /var/www/diplomacy_online/db.php on line 100
+[01-Jul-2010 15:22:18] PHP Notice:  Undefined property: Savant3::$error in /var/www/diplomacy_online/html/main.tpl.php on line 34
+[01-Jul-2010 15:22:34] PHP Notice:  Undefined property: Savant3::$error in /var/www/diplomacy_online/html/main.tpl.php on line 34
+[01-Jul-2010 16:57:12] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22

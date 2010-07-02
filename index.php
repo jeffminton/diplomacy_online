@@ -17,8 +17,11 @@ require_once "db.php";
  */
 class dip
 {
+		
 	public function run()
 	{
+		//$this->randomOrders();
+		
 		/**
 		 * object of type htmlManager. used to set display params
 		 * and display templates		 		
@@ -75,39 +78,50 @@ class dip
 					$html->setVal("page", "login");
 				}
 			}
+			/**************************************************************/
+			// User has requested to register with the site
+			/**************************************************************/
+			elseif(isset($_GET["reg"]))
+			{
+				//set the template data
+				$html->setVal("title", "Diplomacy: Register");
+				$html->setVal("class", "error.hidden");
+				$html->setVal("error", "");
+				$html->setVal("page", "register");
+			}
+			/**************************************************************/
+			// Add user to system
+			// user has selected to register a new account
+			/**************************************************************/
+			elseif(isset($_GET["add"]))
+			{
+				//call userExists method of db class
+				// returns true if a user with requested uid already exists
+				
+				//if true show registration page and display error
+				if($db->userExists() == true)
+				{
+					//set the page title and other information
+					$html->setVal("title", "Diplomacy: User already exists");
+					$html->setVal("class", "error.show");
+					$html->setVal("error", "That user already exists, please try again");
+					$html->setVal("page", "register");
+				}
+				//user doesn't exist
+				else
+				{
+					//set the page title
+					$html->setVal("title", "Diplomacy: Add User");
+					//add user to the db
+					$db->addUser();
+					//display the login page
+					$html->setVal("page", "login");
+				}
+			}
 			else
 			{
 				//set the page title
 				$html->setVal("title", "Diplomacy: Login");
-				$html->setVal("page", "login");
-			}
-		}
-		/**************************************************************/
-		// Add user to system
-		// user has selected to register a new account
-		/**************************************************************/
-		elseif(isset($_GET["add"]))
-		{
-			//call userExists method of db class
-			// returns true if a user with requested uid already exists
-			
-			//if true show registration page and display error
-			if($db->userExists() == true)
-			{
-				//set the page title and other information
-				$html->setVal("title", "Diplomacy: User already exists");
-				$html->setVal("class", "error.show");
-				$html->setVal("error", "That user already exists, please try again");
-				$html->setVal("page", "register");
-			}
-			//user doesn't exist
-			else
-			{
-				//set the page title
-				$html->setVal("title", "Diplomacy: Add User");
-				//add user to the db
-				$db->addUser();
-				//display the login page
 				$html->setVal("page", "login");
 			}
 		}
@@ -149,21 +163,24 @@ class dip
 				$html->setVal("maplist", $maplist);
 				$html->setVal("countries", $countries);
 				$html->setVal("loadJava", true);
+				setcookie("page", "orders", time()+(60 * 60));
 			}
 			//orders have been entered
 			elseif(isset($_GET['ent']))
 			{
 				//enter orders into db
-				$db->enterOrders();
+				//$this->randomOrders();
+				$orders = $_POST['orders'];
+				$db->enterOrders($orders);
 				$html->setVal("title", "Diplomacy: Menu");
 				$html->setVal("page", "menu");
-				system("python processOrders.py");
+				system("/home/web/www/diplomacy_online/processOrders.py", $out);
 			}
 			//list games player is in
 			else
 			{
 				$html->setVal("title", "Diplomacy: Select Game");
-				$gameArr = $db->getPlayersGames();
+				$gameArr = $db->getPlayersGames("ord");
 				$html->setVal("games", $gameArr);
 				$html->setVal("page", "games");
 				$html->setVal("link", "ord");
@@ -211,12 +228,13 @@ class dip
 				$html->setVal("countries", $countries);
 				$html->setVal("orders", $orders);
 				$html->setVal("loadJava", true);
+				setcookie("page", "status", time()+(60 * 60));
 			}
 			//show game list
 			else
 			{
 				$html->setVal("title", "Diplomacy: Select Game");
-				$gameArr = $db->getPlayersGames();
+				$gameArr = $db->getPlayersGames("st");
 				$html->setVal("games", $gameArr);
 				$html->setVal("page", "games");
 				$html->setVal("link", "st");
@@ -243,17 +261,6 @@ class dip
 				$html->setVal("page", "create");
 				$html->setVal("gp", $gp);
 			}
-		}
-		/**************************************************************/
-		// User has requested to register with the site
-		/**************************************************************/
-		elseif(isset($_GET["reg"]))
-		{
-			//set the template data
-			$html->setVal("title", "Diplomacy: Register");
-			$html->setVal("class", "error.hidden");
-			$html->setVal("error", "");
-			$html->setVal("page", "register");
 		}
 		/**************************************************************/
 		// User has selected to join a game
@@ -330,6 +337,408 @@ class dip
 		//show the page
 		$html->showPage();
 	}
+	
+	function randomOrders()
+	{
+		$db = new db();
+		$db->connect();
+		
+		//private $border = array();
+		$border['tun'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('ion', 'tyn', 'wes', 'naf'));
+		$border['sev'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('arm', 'bla', 'rum', 'ukr', 'mos'));
+		$border['ser'] = array(
+			'fleet' => false,
+			'army' => true,
+			'borders' => array('bud', 'tri', 'bul', 'rum', 'gre', 'alb'));
+		$border['vie'] = array(
+			'fleet' => false,
+			'army' => true,
+			'borders' => array('boh', 'tri', 'bud', 'gal', 'tyr'));
+		$border['lon'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('yor', 'eng', 'nth', 'wal'));
+		$border['edi'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('cly', 'lvp', 'yor', 'nrg', 'nth'));
+		$border['alb'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('adr', 'ion', 'ser', 'tri', 'gre'));
+		$border['nwy'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('nth', 'stp', 'ska', 'swe', 'fin'));
+		$border['ank'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('bla', 'con', 'arm', 'smy'));
+		$border['pru'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('sil', 'war', 'lvn', 'bal', 'ber'));
+		$border['mar'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('gol', 'pie', 'bur', 'gas', 'spa'));
+		$border['spa'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('gol', 'mar', 'por', 'wes', 'mid', 'gas'));
+		$border['bre'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('gas', 'par', 'mid', 'eng', 'pic'));
+		$border['arm'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('ank', 'bla', 'smy', 'syr', 'sev'));
+		$border['rom'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('nap', 'tyn', 'tus', 'apu'));
+		$border['gol'] = array(
+			'fleet' => true,
+			'army' => false,
+			'borders' => array('pie', 'tyn', 'wes', 'spa', 'mar', 'tus'));
+		$border['wal'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('lon', 'yor', 'iri', 'eng', 'lvp'));
+		$border['naf'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('tun', 'mid', 'wes'));
+		$border['smy'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('aeg', 'ank', 'con', 'eas', 'arm', 'syr'));
+		$border['eng'] = array(
+			'fleet' => true,
+			'army' => false,
+			'borders' => array('bel', 'bre', 'lon', 'nth', 'pic', 'wal', 'mid', 'iri'));
+		$border['tyr'] = array(
+			'fleet' => false,
+			'army' => true,
+			'borders' => array('boh', 'ven', 'vie', 'tri', 'mun', 'pie'));
+		$border['mid'] = array(
+			'fleet' => true,
+			'army' => false,
+			'borders' => array('bre', 'eng', 'gas', 'iri', 'naf', 'por', 'spa', 'wes', 'nat'));
+		$border['hol'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('kie', 'ruh', 'bel', 'nth', 'hel'));
+		$border['swe'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('bal', 'bar', 'fin', 'nrg', 'nwy', 'bot', 'ska', 'den'));
+		$border['ukr'] = array(
+			'fleet' => false,
+			'army' => true,
+			'borders' => array('war', 'mos', 'sev', 'gal'));
+		$border['wes'] = array(
+			'fleet' => true,
+			'army' => false,
+			'borders' => array('naf', 'tun', 'tyn', 'mid', 'spa', 'gol'));
+		$border['iri'] = array(
+			'fleet' => true,
+			'army' => false,
+			'borders' => array('eng', 'lvp', 'wal', 'nat', 'mid'));
+		$border['gre'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('aeg', 'alb', 'ion', 'ser', 'bul'));
+		$border['ska'] = array(
+			'fleet' => true,
+			'army' => false,
+			'borders' => array('den', 'nth', 'nwy', 'swe'));
+		$border['kie'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('ber', 'mun', 'ruh', 'bal', 'hel', 'hol'));
+		$border['nat'] = array(
+			'fleet' => true,
+			'army' => false,
+			'borders' => array('cly', 'iri', 'lvp', 'mid', 'nrg'));
+		$border['hel'] = array(
+			'fleet' => true,
+			'army' => false,
+			'borders' => array('hol', 'kie', 'bal', 'den', 'nth'));
+		$border['mun'] = array(
+			'fleet' => false,
+			'army' => true,
+			'borders' => array('boh', 'bur', 'ruh', 'tyr', 'kie', 'ber', 'sil'));
+		$border['fin'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('nwy', 'stp', 'bot', 'swe'));
+		$border['war'] = array(
+			'fleet' => false,
+			'army' => true,
+			'borders' => array('lvn', 'pru', 'sil', 'mos', 'gal', 'ukr'));
+		$border['sil'] = array(
+			'fleet' => false,
+			'army' => true,
+			'borders' => array('boh', 'mun', 'gal', 'war', 'ber', 'pru'));
+		$border['ruh'] = array(
+			'fleet' => false,
+			'army' => true,
+			'borders' => array('bur', 'bel', 'hol', 'kie', 'mun'));
+		$border['pic'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('bre', 'par', 'eng', 'bel', 'bur'));
+		$border['den'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('hel', 'kei', 'nth', 'swe', 'bal', 'ska'));
+		$border['rum'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('bla', 'bud', 'gal', 'ser', 'sev', 'bul', 'ukr'));
+		$border['mos'] = array(
+			'fleet' => false,
+			'army' => true,
+			'borders' => array('lvn', 'sev', 'ukr', 'war', 'stp'));
+		$border['gas'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('mar', 'par', 'spa', 'mid', 'bur', 'bre'));
+		$border['tus'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('gol', 'rom', 'tyn', 'ven', 'pie'));
+		$border['nrg'] = array(
+			'fleet' => true,
+			'army' => false,
+			'borders' => array('cly', 'edi', 'nat', 'nth', 'swe', 'bar'));
+		$border['pie'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('tus', 'tyr', 'ven', 'mar', 'gol'));
+		$border['syr'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('eas', 'smy', 'arm'));
+		$border['gal'] = array(
+			'fleet' => false,
+			'army' => true,
+			'borders' => array('boh', 'sil', 'ukr', 'vie', 'war', 'rum', 'bud'));
+		$border['bul'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('aeg', 'bla', 'gre', 'rum', 'ser', 'con'));
+		$border['ven'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('apu', 'tri', 'pie', 'tus', 'adr', 'tyr'));
+		$border['adr'] = array(
+			'fleet' => true,
+			'army' => false,
+			'borders' => array('apu', 'ven', 'alb', 'tri', 'ion'));
+		$border['eas'] = array(
+			'fleet' => true,
+			'army' => false,
+			'borders' => array('ion', 'syr', 'smy', 'aeg'));
+		$border['apu'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('nap', 'rom', 'ion', 'adr', 'ven'));
+		$border['bud'] = array(
+			'fleet' => false,
+			'army' => true,
+			'borders' => array('gal', 'vie', 'rum', 'ser', 'tri'));
+		$border['tri'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('adr', 'bud', 'tyr', 'ven', 'vie', 'alb', 'ser'));
+		$border['bar'] = array(
+			'fleet' => true,
+			'army' => false,
+			'borders' => array('nrg', 'stp', 'swe'));
+		$border['lvp'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('cly', 'wal', 'yor', 'nat', 'iri', 'edi'));
+		$border['bel'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('hol', 'nth', 'pic', 'ruh', 'eng', 'bur'));
+		$border['nth'] = array(
+			'fleet' => true,
+			'army' => false,
+			'borders' => array('edi', 'hel', 'hol', 'lon', 'yor', 'ska', 'den', 'nwy', 'nrg', 'eng', 'bel'));
+		$border['tyn'] = array(
+			'fleet' => true,
+			'army' => false,
+			'borders' => array('nap', 'tus', 'gol', 'wes', 'tun', 'ion', 'rom'));
+		$border['bot'] = array(
+			'fleet' => true,
+			'army' => false,
+			'borders' => array('bal', 'fin', 'swe', 'stp', 'lvn'));
+		$border['bur'] = array(
+			'fleet' => false,
+			'army' => true,
+			'borders' => array('bel', 'gas', 'mar', 'par', 'pic', 'mun', 'ruh'));
+		$border['ion'] = array(
+			'fleet' => true,
+			'army' => false,
+			'borders' => array('adr', 'apu', 'nap', 'tyn', 'gre', 'alb', 'aeg', 'tun', 'eas'));
+		$border['stp'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('bar', 'bot', 'fin', 'lvn', 'mos', 'nwy'));
+		$border['aeg'] = array(
+			'fleet' => true,
+			'army' => false,
+			'borders' => array('bla', 'eas', 'ion', 'smy', 'con', 'bul', 'gre'));
+		$border['ber'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('mun', 'pru', 'sil', 'bal', 'kie'));
+		$border['bal'] = array(
+			'fleet' => true,
+			'army' => false,
+			'borders' => array('ber', 'den', 'hel', 'kie', 'pru', 'lvn', 'bot', 'swe'));
+		$border['lvn'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('bal', 'bot', 'pru', 'stp', 'mos', 'war'));
+		$border['con'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('aeg', 'bla', 'bul', 'smy', 'ank'));
+		$border['boh'] = array(
+			'fleet' => false,
+			'army' => true,
+			'borders' => array('vie', 'tyr', 'mun', 'sil', 'gal'));
+		$border['cly'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('lvp', 'nat', 'edi', 'nrg'));
+		$border['yor'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('nth', 'lon', 'wal', 'lvp', 'edi'));
+		$border['par'] = array(
+			'fleet' => false,
+			'army' => true,
+			'borders' => array('bur', 'gas', 'bre', 'pic'));
+		$border['nap'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('apu', 'ion', 'tyn', 'rom'));
+		$border['por'] = array(
+			'fleet' => true,
+			'army' => true,
+			'borders' => array('spa', 'mid'));
+		$border['bla'] = array(
+			'fleet' => true,
+			'army' => false,
+			'borders' => array('sev', 'arm', 'ank', 'con', 'aeg', 'bul', 'rum'));
+		
+		if(isset($_SESSION['uid']))
+		{
+			$realUid = $_SESSION['uid'];
+			
+			$maplist = array();
+			$countries = array();
+			
+			//get current state of the map from the db
+			$map = $db->getMap();
+			
+			//a little conversion work
+			//using table retrieved from db, create associative arrays
+			//that store player names mapped to countries
+			//and player names mapped to arrays of area info
+			//that contain aid map to 3 char area code and type mapped to unit type
+			for($i = 0; $i < count($map); $i++)
+			{
+				$row = $map[$i];
+				if(!array_key_exists($row['uid'], $maplist))
+				{
+					$maplist[$row['uid']] = array();
+					$countries[$row['uid']] = $row['country'];
+				}
+				
+				array_push($maplist[$row['uid']], array("type" => $row['type'], "aid" => $row['aid']));
+			}
+			
+			print_r($maplist);
+			
+			foreach($maplist as $otherUid => $area)
+			{
+				if($otherUid != $realUid)
+				{
+					$_SESSION['uid'] = $otherUid;
+					$order = "";
+					
+					echo "UID: " . $otherUid . "<br />";
+					echo "area: ";
+					print_r($area);
+					echo "<br />";
+					for($i = 0; $i < count($area); $i++)
+					{
+						echo "check1<br />";
+						$choice = rand(1, 2);
+						
+						if($area[$i]['type'] == 'f' || $area[$i]['type'] == 'a')
+						{
+							echo "check2<br />";
+							if($choice == 1)
+							{
+								$order = $order . $area[$i]['type'] . " " . $area[$i]['aid'] . "-holds\r\n";
+							}
+							else
+							{
+								echo "check3<br />";
+								$canGoTo = array();
+								if($area[$i]['type'] == 'f')
+								{
+									echo "checkf<br />";
+									$currAID = $border[$area[$i]['aid']];
+									foreach($currAID['borders'] as $aidBorder)
+									{
+										if($border[$aidBorder]['fleet'] == true)
+										{
+											array_push($canGoTo, $aidBorder);
+										}
+									}
+								}
+								if($area[$i]['type'] == 'a')
+								{
+									echo "checka<br />";
+									$currAID = $border[$area[$i]['aid']];
+									foreach($currAID['borders'] as $aidBorder)
+									{
+										if($border[$aidBorder]['army'] == true)
+										{
+											array_push($canGoTo, $aidBorder);
+										}
+									}
+								}
+								
+								$choice = rand(0, count($canGoTo) - 1);
+									
+								$order = $order . $area[$i]['type'] . " " . $area[$i]['aid'] . "-" . $canGoTo[$choice] . "\r\n";
+							}
+						}
+					}
+					$db->enterOrders($order);
+				}
+			}
+			$_SESSION['uid'] = $realUid;
+		}
+	}
+	
 }
 
 //Object if type dip, used to run main code

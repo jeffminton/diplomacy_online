@@ -5,3 +5,6 @@
 <a href="index.php?ord=1">Submit Orders</a>
 <br />
 <a href="index.php?st=1">Status</a>
+<?php if(isset($this->vals['py'])):?>
+	<?php echo $this->vals['py'];?>
+<?php endif; ?>
