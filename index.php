@@ -348,6 +348,11 @@ class dip
 		$html->showPage();
 	}
 	
+	
+	/**
+	 * This function generates random moves for other palyers
+	 * it will not be included in the final release
+	 */
 	function randomOrders()
 	{
 		$db = new db();

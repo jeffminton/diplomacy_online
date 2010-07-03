@@ -1,21 +1,25 @@
 var map;
 var context;
 
+
+/**
+ * runs when the windows loads
+ * 
+ * instantiates the map object
+ */
 window.onload = function()
 {
-	//blah();
 	map = new mapObj();
 	map.show();
 	blah();
 }
 
-var blah = function()
-{
-	//alert(map);
-	//map.drawOwned([20, 20], "austria");
-}
 
-
+/**
+ * the main map object
+ * 
+ * contains the code to draw and change the map
+ */
 function mapObj()
 {
 
@@ -83,7 +87,10 @@ function mapObj()
 	}
 	
 	
-	
+	/**
+	 * Add an onclick property to an object and change its
+	 * opacity
+	 */
 	this.addClick = function(data)
 	{
 		//alert(data.toString());
@@ -93,6 +100,9 @@ function mapObj()
 	}
 	
 	
+	/**
+	 * remove an onclick property from an object
+	 */
 	this.rmClick = function(country)
 	{
 		this.countryObj[country].attr({'opacity': 0.5});
@@ -100,6 +110,10 @@ function mapObj()
 	}
 	
 	
+	/**
+	 * determine the action that should be carried out when 
+	 * something is clicked
+	 */
 	this.action = function(data)
 	{
 		//alert(data.toString());
@@ -114,6 +128,11 @@ function mapObj()
 	}
 	
 	
+	/**
+	 * add a completed order to the order string and set the
+	 * valuse of the hidden order field to the value
+	 * of the oreder string
+	 */
 	this.addOrder = function(data)
 	{
 		var orderType = data.pop();
@@ -134,6 +153,9 @@ function mapObj()
 	}
 	
 	
+	/**
+	 * if the user selected to hold their army
+	 */
 	this.holdClicked = function(data)
 	{
 		context.hide();
@@ -144,6 +166,13 @@ function mapObj()
 		this.addOrder(["hold", "holds", countrySym, type, "hold"]);
 	}
 	
+	
+	/**
+	 * if the user clicked move
+	 * 
+	 * shadow all countrieas and then make all possible
+	 * movement locations brighter and clicakble
+	 */
 	this.moveClicked = function(data)
 	{
 		context.hide();
@@ -189,11 +218,17 @@ function mapObj()
 	}
 	
 	
+	/**
+	 * will be used for support moves
+	 */
 	this.supportClicked = function(data)
 	{
 	}
 	
 	
+	/**
+	 * will be used for convoy moves
+	 */
 	this.convoyClicked = function(data)
 	{
 	}
@@ -258,6 +293,10 @@ function mapObj()
 	}
 	
 	
+	/**
+	 * run the addclick function on all countries the user has units
+	 * in so that the user my take an action
+	 */
 	this.showClickable = function()
 	{
 		var activeCountries = this.active.length;
@@ -279,6 +318,9 @@ function mapObj()
 	}
 		
 	
+	/**
+	 * check if a unit has already been given an order
+	 */
 	this.inOrdered = function(aid)
 	{
 		for(var i = 0; i < this.ordered.length; i++)
@@ -294,6 +336,12 @@ function mapObj()
 }
 
 
+/**
+ * Contains the data for the context menu object
+ * 
+ * used to display a context menu asking them what action they want 
+ * a unit to take
+ */
 this.contextMenu = function(myMap)
 	{
 		this.hold = null;
@@ -302,6 +350,9 @@ this.contextMenu = function(myMap)
 		this.convoy = null;
 		this.myMap = myMap;
 		
+		/**
+		 * show the contextmenu
+		 */
 		this.show = function(data)
 		{
 			var xOffset, yOffset;
@@ -349,7 +400,10 @@ this.contextMenu = function(myMap)
 				context.unshade("convoy");};
 		}
 		
-		
+		/**
+		 * set the opacity of a button to 1 when the mouse leaves the
+		 * button
+		 */
 		this.unshade = function(button)
 		{
 			switch(button)
@@ -369,6 +423,11 @@ this.contextMenu = function(myMap)
 			}
 		}
 		
+		
+		/**
+		 * set the opacity of a butten to .5 when the mouse hovers
+		 * over it
+		 */
 		this.shade = function(button)
 		{
 			switch(button)
@@ -388,6 +447,10 @@ this.contextMenu = function(myMap)
 			}
 		}
 		
+		
+		/**
+		 * remove the context menu from the screen
+		 */
 		this.hide = function()
 		{
 			this.hold.remove();

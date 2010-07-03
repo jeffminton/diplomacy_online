@@ -116,6 +116,11 @@ def checkOrders():
 		update(orders, currMap, gid)
 		
 	
+	##Validate all the orders to ensure they can even be executed
+	#@param[currMap] the current state of the map
+	#@param[orders] a dictionary of orders match uid to orders
+	#@param[uid] the users id
+	#@param[currOrder] the current order being examined
 	def validateRecurse(currMap, orders, uid, currOrder):
 		unitType = currOrder['type']
 		fromCo = currOrder['from']
