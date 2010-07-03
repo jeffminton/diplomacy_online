@@ -259,6 +259,28 @@ class db
 	
 	
 	/**
+	 * Reset a game
+	 */
+	function resetGame()
+	{
+		$gid = $_GET['gid'];
+		
+		$query = "DELETE FROM orders
+					WHERE gid=$gid;";
+		$result = mysql_query($query) or die("db access error" . mysql_error());
+		
+		$query = "DELETE FROM curr_map
+					WHERE gid=$gid and (year<>1901 or season<>'s');";
+		$result = mysql_query($query) or die("db access error" . mysql_error());
+		
+		$query = "UPDATE games
+					SET season='s', year=1901
+					WHERE gid=$gid;";
+		
+		$result = mysql_query($query) or die("db access error" . mysql_error());
+	}
+	
+	/**
 	 * Get the orders entered that made causeed the map to be in its
 	 * current state
 	 * 
@@ -342,7 +364,7 @@ class db
 			$day = (int)$day + 7;
 			$datetime = $year . "-" . $month . "-" . $day . " 00:00:00";
 			$query = "UPDATE games
-						SET running=true, deadline=$datetime
+						SET running=true, deadline='$datetime'
 						WHERE gid=$gid;";
 			$result = mysql_query($query) or die("db access error" . mysql_error());
 		}

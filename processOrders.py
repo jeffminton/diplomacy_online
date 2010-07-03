@@ -33,6 +33,7 @@ def checkOrders():
 			FROM games"
 		cursor.execute(query)
 		games = cursor.fetchall()
+		#sys.stdout.write("list of games: " + str(games))
 		for game in games:
 			gid = game['gid']
 			query = "SELECT i.uid \
@@ -45,11 +46,13 @@ def checkOrders():
 				WHERE g.gid=" + str(gid) + " and g.gid=o.gid and g.year=o.year and g.season=o.season"
 			cursor.execute(query)
 			orders = cursor.fetchall()
+			#sys.stdout.write("checking game: " + str(gid))
 			if(players == orders):
 				execute(gid)
 			else:
-				#sys.stdout.write(str("orders not in"))
-				return "orders not in"
+				0
+				#sys.stdout.write("orders not in for game: " + str(gid))
+				#return "orders not in"
 	
 	##execute orders for game
 	#@param[gid] the game whos orders to execute
@@ -106,30 +109,41 @@ def checkOrders():
 	
 		for uid in orders:
 			for i in range(len(orders[uid])):
-				currOrder = orders[uid][i]
-				unitType = currOrder['type']
-				fromCo = currOrder['from']
-				action = currOrder['action']
-				if(currOrder.has_key('result')):
-					result = currOrder['result']
-				else:
-					result = None
-				
-				'''check if order already resolved'''
-				if(result == None):
-					'''ensure that player has unit in from country''' 
-					if(currMap[uid].has_key(fromCo)):
-						'''HOLD action desired'''
-						if(action == "holds"):
-							for checkUser in orders:
-								for j in range(len(orders[checkUser])):
-									checkOrder = orders[checkUser][j]
-									'''if move order found to hold point'''
-									if(fromCo == checkOrder['action'] and currOrder != checkOrder):
-										orders[checkUser][j]['result'] = False
-										orders[checkUser][j]['note'] = "Attempted move to occupied city"
-							orders[uid][i]['result'] = True
-							orders[uid][i]['note'] = "Hold successful"	
+				validateRecurse(currMap, orders, uid, orders[uid][i])
+			#end for i in range(len(orders[uid])):
+		#end for uid in orders:
+		#sys.stdout.write( str(orders))
+		update(orders, currMap, gid)
+		
+	
+	def validateRecurse(currMap, orders, uid, currOrder):
+		unitType = currOrder['type']
+		fromCo = currOrder['from']
+		action = currOrder['action']
+		if(currOrder.has_key('result')):
+			result = currOrder['result']
+		else:
+			result = None
+		#end if(currOrder.has_key('result')):
+		'''check if order already resolved'''
+		if(result == None):
+			'''ensure that player has unit in from country''' 
+			if(currMap[uid].has_key(fromCo)):
+				'''HOLD action desired'''
+				if(action == "holds"):
+					for checkUser in orders:
+						for j in range(len(orders[checkUser])):
+							checkOrder = orders[checkUser][j]
+							'''if move order found to hold point'''
+							if(fromCo == checkOrder['action'] and currOrder != checkOrder):
+								checkOrder['result'] = False
+								checkOrder['note'] = "Attempted move to occupied city"
+							#end if(fromCo == checkOrder['action'] and currOrder != checkOrder):
+						#end for j in range(len(orders[checkUser])):
+					#end for checkUser in orders:
+					currOrder['result'] = True
+					currOrder['note'] = "Hold successful"
+					return 'hold', True	
 # 						'''Convoy action desired'''
 # 						elif(action == "c"):
 # 							0
@@ -137,37 +151,70 @@ def checkOrders():
 # 						elif(action == "s"):
 # 							0
 # 						'''Move action desired'''
-						else:
-							success = True
-							connection = border[fromCo]
-							borderExists = False
-							for country in connection:
-								if(action == country):
-									borderExists = True
-							if(borderExists == True):
-								for checkUser in orders:
-									for j in range(len(orders[checkUser])):
-										checkOrder = orders[checkUser][j]
-										'''if another move order found to same place as this order'''
-										if(action == checkOrder['action'] and currOrder != checkOrder):
-											orders[checkUser][j]['result'] = False
-											orders[checkUser][j]['note'] = "Two units move to " + action + " both units bounce"
-											orders[uid][i]['result'] = False
-											orders[uid][i]['note'] = "Two units move to " + action + " both units bounce"
+				else:
+					success = True
+					connection = border[fromCo]
+					borderExists = False
+					for country in connection:
+						if(action == country):
+							borderExists = True
+						#end if(action == country):
+					#end for country in connection:
+					if(borderExists == True):
+						for checkUser in orders:
+							for j in range(len(orders[checkUser])):
+								checkOrder = orders[checkUser][j]
+								'''if another move order found to same place as this order'''
+								if(action == checkOrder['from'] and fromCo == checkOrder['action']):
+									checkOrder['result'] = False
+									checkOrder['note'] = "Two units try to smap places"
+									currOrder['result'] = False
+									currOrder['note'] = "Two units try to smap places"
+									success = False
+								elif(action == checkOrder['action'] and currOrder != checkOrder):
+									checkOrder['result'] = False
+									checkOrder['note'] = "Two units move to " + action + " both units bounce"
+									currOrder['result'] = False
+									currOrder['note'] = "Two units move to " + action + " both units bounce"
+									success = False
+								#end if(action == checkOrder['action'] and currOrder != checkOrder):
+								elif(action == checkOrder['from']):
+									#sys.stdout.write(str(checkUser))
+									#sys.stdout.write(str(checkOrder))
+									if(checkOrder.has_key('result')):
+										if(checkOrder['result'] == True and checkOrder['action'] != 'holds'):
+											success = True
+										else:
 											success = False
-							else:
-								success = False
-								orders[uid][i]['result'] = False
-								orders[uid][i]['note'] = "There is no path from " + fromCo + " to " + action
-
-							if(success == True):
-								orders[uid][i]['result'] = True
-								orders[uid][i]['note'] = "Action successful"
+											currOrder['result'] = False
+											currorder['note'] = "Attempted move to occupied city"
+									else:
+										nextType, nextResult = validateRecurse(currMap, orders, checkUser, checkOrder)
+										if(nextType == 'hold' or (nextType == 'move' and nextResult == False)):
+											success = False
+											currOrder['result'] = False
+											currOrder['note'] = "Attempted move to occupied city"
+								#end if(action == checkOrder['from']):	
+							#end for j in range(len(orders[checkUser])):
+						#end for checkUser in orders:
 					else:
-						orders[uid][i]['result'] = False
-						orders[uid][i]['note'] = "Player does not own that country"	
-		#sys.stdout.write( str(orders))
-		update(orders, currMap, gid)
+						success = False
+						currOrder['result'] = False
+						currOrder['note'] = "There is no path from " + fromCo + " to " + action
+					#end if(borderExists == True):
+					if(success == True):
+						currOrder['result'] = True
+						currOrder['note'] = "Action successful"
+						return 'move', True
+					else:
+						return 'move', False
+					#end if(success == True):
+				#end if(action == "holds"):
+			else:
+				currOrder['result'] = False
+				currOrder['note'] = "Player does not own that country"	
+			#end if(currMap[uid].has_key(fromCo)):
+		#end if(result == None):
 	
 	##Update orders with results and fill in current map table
 	#@param[orders] the orders now containing the reasults
@@ -222,7 +269,14 @@ def checkOrders():
 				for order in orders[uid]:
 					if(order['from'] == aid and order['result'] == True and order['action'] != "holds"):
 						newMap[uid][order['action']] = order['type']
-						newMap[uid][order['from']] = None
+						'''make sure you don't set a place that will
+						be occupied to None'''
+						occupied = False
+						for otherOrder in orders[uid]:
+							if(otherOrder['result'] == True and otherOrder['action'] == aid):
+								occupied = True
+						if(occupied == False):
+							newMap[uid][order['from']] = None
 						'''remove taken over teritories'''
 						for uidCheck in currMap:
 							if(uidCheck != uid and currMap[uidCheck].has_key(order['action'])):

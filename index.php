@@ -169,7 +169,7 @@ class dip
 			elseif(isset($_GET['ent']))
 			{
 				//enter orders into db
-				//$this->randomOrders();
+				$this->randomOrders();
 				$orders = $_POST['orders'];
 				$db->enterOrders($orders);
 				$html->setVal("title", "Diplomacy: Menu");
@@ -239,6 +239,16 @@ class dip
 				$html->setVal("page", "games");
 				$html->setVal("link", "st");
 			}
+		}
+		/**************************************************************/
+		// User has selected to reset a game
+		/**************************************************************/
+		elseif(isset($_GET['rst']))
+		{
+			$db->resetGame();
+			//set the page title
+			$html->setVal("title", "Diplomacy: Menu");
+			$html->setVal("page", "menu");
 		}
 		/**************************************************************/
 		// User has selected to create a game
@@ -499,7 +509,7 @@ class dip
 		$border['den'] = array(
 			'fleet' => true,
 			'army' => true,
-			'borders' => array('hel', 'kei', 'nth', 'swe', 'bal', 'ska'));
+			'borders' => array('hel', 'kie', 'nth', 'swe', 'bal', 'ska'));
 		$border['rum'] = array(
 			'fleet' => true,
 			'army' => true,
@@ -672,7 +682,7 @@ class dip
 				array_push($maplist[$row['uid']], array("type" => $row['type'], "aid" => $row['aid']));
 			}
 			
-			print_r($maplist);
+			//print_r($maplist);
 			
 			foreach($maplist as $otherUid => $area)
 			{
@@ -681,29 +691,29 @@ class dip
 					$_SESSION['uid'] = $otherUid;
 					$order = "";
 					
-					echo "UID: " . $otherUid . "<br />";
-					echo "area: ";
-					print_r($area);
-					echo "<br />";
+					//echo "UID: " . $otherUid . "<br />";
+					//echo "area: ";
+					//print_r($area);
+					//echo "<br />";
 					for($i = 0; $i < count($area); $i++)
 					{
-						echo "check1<br />";
+						//echo "check1<br />";
 						$choice = rand(1, 2);
 						
 						if($area[$i]['type'] == 'f' || $area[$i]['type'] == 'a')
 						{
-							echo "check2<br />";
+							//echo "check2<br />";
 							if($choice == 1)
 							{
 								$order = $order . $area[$i]['type'] . " " . $area[$i]['aid'] . "-holds\r\n";
 							}
 							else
 							{
-								echo "check3<br />";
+								//echo "check3<br />";
 								$canGoTo = array();
 								if($area[$i]['type'] == 'f')
 								{
-									echo "checkf<br />";
+									//echo "checkf<br />";
 									$currAID = $border[$area[$i]['aid']];
 									foreach($currAID['borders'] as $aidBorder)
 									{
@@ -715,7 +725,7 @@ class dip
 								}
 								if($area[$i]['type'] == 'a')
 								{
-									echo "checka<br />";
+									//echo "checka<br />";
 									$currAID = $border[$area[$i]['aid']];
 									foreach($currAID['borders'] as $aidBorder)
 									{

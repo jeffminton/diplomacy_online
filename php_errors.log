@@ -42,3 +42,37 @@
 [01-Jul-2010 15:22:18] PHP Notice:  Undefined property: Savant3::$error in /var/www/diplomacy_online/html/main.tpl.php on line 34
 [01-Jul-2010 15:22:34] PHP Notice:  Undefined property: Savant3::$error in /var/www/diplomacy_online/html/main.tpl.php on line 34
 [01-Jul-2010 16:57:12] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[02-Jul-2010 21:44:27] PHP Notice:  session_start() [<a href='function.session-start'>function.session-start</a>]: ps_files_cleanup_dir: opendir(/var/lib/php5) failed: Permission denied (13) in /var/www/diplomacy_online/index.php on line 10
+[02-Jul-2010 21:53:38] PHP Warning:  mysql_result() [<a href='function.mysql-result'>function.mysql-result</a>]: Unable to jump to row 0 on MySQL result index 9 in /var/www/diplomacy_online/db.php on line 100
+[02-Jul-2010 21:53:39] PHP Warning:  mysql_result() [<a href='function.mysql-result'>function.mysql-result</a>]: Unable to jump to row 0 on MySQL result index 9 in /var/www/diplomacy_online/db.php on line 100
+[02-Jul-2010 21:53:39] PHP Warning:  mysql_result() [<a href='function.mysql-result'>function.mysql-result</a>]: Unable to jump to row 0 on MySQL result index 9 in /var/www/diplomacy_online/db.php on line 100
+[02-Jul-2010 21:53:39] PHP Warning:  mysql_result() [<a href='function.mysql-result'>function.mysql-result</a>]: Unable to jump to row 0 on MySQL result index 9 in /var/www/diplomacy_online/db.php on line 100
+[02-Jul-2010 21:53:39] PHP Warning:  mysql_result() [<a href='function.mysql-result'>function.mysql-result</a>]: Unable to jump to row 0 on MySQL result index 9 in /var/www/diplomacy_online/db.php on line 100
+[02-Jul-2010 21:53:39] PHP Warning:  mysql_result() [<a href='function.mysql-result'>function.mysql-result</a>]: Unable to jump to row 0 on MySQL result index 9 in /var/www/diplomacy_online/db.php on line 100
+[02-Jul-2010 21:53:40] PHP Warning:  mysql_result() [<a href='function.mysql-result'>function.mysql-result</a>]: Unable to jump to row 0 on MySQL result index 9 in /var/www/diplomacy_online/db.php on line 100
+[02-Jul-2010 21:53:40] PHP Warning:  mysql_result() [<a href='function.mysql-result'>function.mysql-result</a>]: Unable to jump to row 0 on MySQL result index 9 in /var/www/diplomacy_online/db.php on line 100
+[02-Jul-2010 21:53:40] PHP Warning:  mysql_result() [<a href='function.mysql-result'>function.mysql-result</a>]: Unable to jump to row 0 on MySQL result index 9 in /var/www/diplomacy_online/db.php on line 100
+[02-Jul-2010 21:53:40] PHP Warning:  mysql_result() [<a href='function.mysql-result'>function.mysql-result</a>]: Unable to jump to row 0 on MySQL result index 9 in /var/www/diplomacy_online/db.php on line 100
+[02-Jul-2010 21:53:40] PHP Warning:  mysql_result() [<a href='function.mysql-result'>function.mysql-result</a>]: Unable to jump to row 0 on MySQL result index 9 in /var/www/diplomacy_online/db.php on line 100
+[02-Jul-2010 21:53:40] PHP Warning:  mysql_result() [<a href='function.mysql-result'>function.mysql-result</a>]: Unable to jump to row 0 on MySQL result index 9 in /var/www/diplomacy_online/db.php on line 100
+[02-Jul-2010 21:53:41] PHP Warning:  mysql_result() [<a href='function.mysql-result'>function.mysql-result</a>]: Unable to jump to row 0 on MySQL result index 9 in /var/www/diplomacy_online/db.php on line 100
+[02-Jul-2010 21:53:41] PHP Warning:  mysql_result() [<a href='function.mysql-result'>function.mysql-result</a>]: Unable to jump to row 0 on MySQL result index 9 in /var/www/diplomacy_online/db.php on line 100
+[02-Jul-2010 21:54:25] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/diplomacy_online/index.php:686) in /var/www/diplomacy_online/index.php on line 334
+[02-Jul-2010 21:55:38] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[02-Jul-2010 22:00:34] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[02-Jul-2010 22:07:11] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[02-Jul-2010 22:30:45] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[02-Jul-2010 22:32:49] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[02-Jul-2010 22:57:07] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[02-Jul-2010 23:00:23] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[02-Jul-2010 23:01:39] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[02-Jul-2010 23:03:14] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[02-Jul-2010 23:04:49] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[03-Jul-2010 00:23:51] PHP Notice:  Undefined index: kei in /var/www/diplomacy_online/index.php on line 720
+[03-Jul-2010 00:24:56] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[03-Jul-2010 00:26:05] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[03-Jul-2010 00:40:25] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[03-Jul-2010 00:43:37] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[03-Jul-2010 00:46:34] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22
+[03-Jul-2010 01:25:08] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/diplomacy_online/index.php:177) in /var/www/diplomacy_online/index.php on line 344
+[03-Jul-2010 01:43:49] PHP Warning:  Invalid argument supplied for foreach() in /var/www/diplomacy_online/html/status.tpl.php on line 22

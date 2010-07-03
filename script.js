@@ -161,6 +161,7 @@ function mapObj()
 		from = border[countrySym];
 		borders = from.borders;
 		
+		//alert(borders.toString());
 		for(var i = 0; i < borders.length; i++)
 		{
 			//alert(borders[i]);

@@ -160,7 +160,7 @@ border['pic'] = {
 border['den'] = {
 	fleet : true,
 	army : true,
-	borders : Array('hel', 'kei', 'nth', 'swe', 'bal', 'ska')};
+	borders : Array('hel', 'kie', 'nth', 'swe', 'bal', 'ska')};
 border['rum'] = {
 	fleet : true,
 	army : true,
@@ -449,7 +449,7 @@ countryPath['fin'] = 'M 686,73 L 681,74 L 678,82 L 679,88 L 697,100 L 704,106 L 
 countryPath['war'] = 'M 715,474 L 707,484 L 683,491 L 672,486 L 653,492 L 645,508 L 632,520 L 643,553 L 664,566 L 666,565 L 674,570 L 696,559 L 698,550 L 703,551 L 718,564 L 727,567 L 738,555 L 746,563 L 748,565 L 755,529 L 750,523 L 749,514 L 741,494 L 724,483 z';
 countryPath['sil'] = 'M 550,527 L 560,558 L 574,551 L 578,546 L 584,545 L 587,546 L 593,543 L 604,549 L 609,553 L 612,559 L 613,563 L 622,570 L 634,568 L 641,577 L 648,576 L 661,565 L 644,551 L 633,520 L 594,512 L 588,522 L 568,523 L 564,527 z';
 countryPath['stp-sc'] = 'M 802,237 L 842,259 L 849,317 L 842,356 L 828,379 L 811,386 L 790,386 L 786,369 L 769,345 L 746,341 L 728,340 L 719,328 L 737,318 L 751,316 L 763,319 L 769,321 L 782,310 L 787,302 L 772,299 L 780,285 L 787,271 L 795,264 z';
-countryPath['eme'] = 'M 853,908 L 846,913 L 806,950 L 749,947 L 751,965 L 1005,964 L 1001,936 L 993,907 L 995,891 L 985,900 L 974,893 L 965,909 L 938,919 L 914,913 L 893,908 L 888,922 L 869,922 z';
+countryPath['eas'] = 'M 853,908 L 846,913 L 806,950 L 749,947 L 751,965 L 1005,964 L 1001,936 L 993,907 L 995,891 L 985,900 L 974,893 L 965,909 L 938,919 L 914,913 L 893,908 L 888,922 L 869,922 z';
 countryPath['ruh'] = 'M 447,588 L 451,594 L 464,579 L 474,563 L 503,552 L 498,541 L 486,532 L 475,521 L 467,501 L 454,508 L 451,520 L 442,536 L 447,555 L 437,567 L 438,579 z';
 countryPath['mar'] = 'M 323,717 L 357,734 L 361,719 L 378,713 L 415,736 L 449,718 L 436,703 L 433,691 L 428,684 L 441,677 L 433,664 L 443,661 L 441,650 L 422,654 L 394,646 L 391,651 L 391,673 L 388,678 L 370,677 L 362,685 L 352,682 L 347,683 z';
 countryPath['aeg'] = 'M 737,920 L 742,911 L 738,902 L 746,890 L 750,891 L 763,883 L 768,874 L 742,852 L 731,830 L 749,834 L 764,818 L 773,814 L 781,811 L 803,815 L 790,831 L 793,841 L 798,841 L 807,858 L 795,857 L 795,869 L 801,877 L 811,880 L 823,894 L 821,911 L 844,913 L 833,926 L 806,949 L 752,947 z';
@@ -493,7 +493,7 @@ countryPath['con'] = 'M 831,771 L 823,772 L 815,773 L 813,773 L 808,774 L 792,78
 
 
 //list of all countries
-var countrySym = ['nth', 'ska', 'fin', 'nwy', 'swe', 'bot', 'stp', 'bal', 'lvn', 'mos', 'sev', 'ukr', 'syr', 'arm', 'ank', 'smy', 'con', 'bul', 'gre', 'alb', 'ser', 'rum', 'war', 'gal', 'bud', 'pru', 'den', 'hel', 'ber', 'sil', 'boh', 'vie', 'tri', 'tyr', 'mun', 'kie', 'ruh', 'hol', 'bel', 'pic', 'par', 'bre', 'bur', 'gas', 'mar', 'nap', 'rom', 'apu', 'ven', 'pie', 'tus', 'por', 'spa', 'naf', 'tun', 'bla', 'eme', 'aeg', 'adr', 'ion', 'tyn', 'gol', 'wes', 'mid', 'eng', 'lon', 'wal', 'yor', 'lvp', 'edi', 'iri', 'cly', 'bar', 'nrg', 'nat', 'swi'];
+var countrySym = ['nth', 'ska', 'fin', 'nwy', 'swe', 'bot', 'stp', 'bal', 'lvn', 'mos', 'sev', 'ukr', 'syr', 'arm', 'ank', 'smy', 'con', 'bul', 'gre', 'alb', 'ser', 'rum', 'war', 'gal', 'bud', 'pru', 'den', 'hel', 'ber', 'sil', 'boh', 'vie', 'tri', 'tyr', 'mun', 'kie', 'ruh', 'hol', 'bel', 'pic', 'par', 'bre', 'bur', 'gas', 'mar', 'nap', 'rom', 'apu', 'ven', 'pie', 'tus', 'por', 'spa', 'naf', 'tun', 'bla', 'eas', 'aeg', 'adr', 'ion', 'tyn', 'gol', 'wes', 'mid', 'eng', 'lon', 'wal', 'yor', 'lvp', 'edi', 'iri', 'cly', 'bar', 'nrg', 'nat', 'swi'];
 
 
 //svg path of the cannons

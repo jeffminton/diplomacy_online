@@ -10,6 +10,9 @@
 				<?php echo $this->eprint($this->vals['link']); ?>=1&gid=
 				<?php echo $this->eprint($gameArr['gid']); ?>">
 				<?php echo $this->eprint($gameArr['gid']); ?></a>
+			<a href="index.php?rst=1&gid=
+				<?php echo $this->eprint($gameArr['gid']); ?>">
+				: Reset</a>
 		<?php else: ?>
 			<?php echo $this->eprint($gameArr['gid']); ?>
 		<?php endif; ?>
