@@ -4,7 +4,7 @@ An implementation of the Diplomacy board game playable entirely in the browser
 
 ## TODO
 
-The big change that will be coming next is that I will be changing the way the map is drawn so that it will no longer have to rely on the raphaeljs libraries which I'm sure are playing a hand in making the interface very sluggish.
+The big change that will be coming next is that I will be changing the way the map is drawn so that it will no longer have to rely on the raphaeljs libraries which I'm sure are playing a hand in making the interface very sluggish. I will instead be using the HTML 5 canvas tag.
 
 
 ## Files:
