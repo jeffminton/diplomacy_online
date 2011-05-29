@@ -1,17 +1,19 @@
-File Explainations:
+## Diplomacy Online
 
-index.php: main file, is run when site is accessed, determines what other pages to show
+An implementation of the Diplomacy board game playable entirely in the browser
 
-db.php: contains functions to perform db transations
+## TODO
 
-htmlManager.php: contains functions to setup templates
+The big change that will be coming next is that I will be changing the way the map is drawn so that it will no longer have to rely on the raphaeljs libraries which I'm sure are playing a hand in making the interface very sluggish.
 
-processOrders.py: processes orders input by players
 
-script.js: contains js code to display game map
+## Files:
 
-map/raphael.js: the raphaeljs library http://raphaeljs.com/
-
-html/: the html templates
-
-map/: the map files
+* index.php: main file, is run when site is accessed, determines what other pages to show
+* db.php: contains functions to perform db transactions
+* htmlManager.php: contains functions to setup templates
+* processOrders.py: processes orders input by players
+* script.js: contains js code to display game map
+* map/raphael.js: the raphaeljs library http://raphaeljs.com/
+* html/: the html templates
+* map/: the map files
